@@ -7,10 +7,10 @@ When it comes to data fluency,
 - Supervisor alignment is key and supers demand fair value in return for crew's time.
 
 We've learned to scale data fluency program. The hard-won lessons are in this data fluency playbook. 
-Use the playbook as a "How To" guide to improve success rates by
-- organizing people in **cohorts** to learn independently and support each other while leveraging the mentor
-- developing **learner profiles** to tailor currcula to diverse needs and aspirations
-- show supervisors skin in the game through **project work**
+Use the playbook as a "How To" guide to improve success rates as follows.
+- Organize people in **cohorts** to learn independently and support each other while leveraging the mentor.
+- Develop **learner profiles** to tailor curricula to diverse needs and aspirations of learners.
+- Show supervisors skin in the game through group **project work**.
 
 This playbook for data fluency program at scale delivered as an R-Shiny app. Interested in helping me develop this as a product?
 Contact me: sanjay.bhatikar@gmail.com
