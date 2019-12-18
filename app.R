@@ -12,7 +12,8 @@ source("corpus.R")
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
-  tags$head(
+  # Style elements
+  tags$head( # ITTO grid elements
     tags$style(HTML("
                   .col-sm-3, .col-sm-9 {
                     padding-right: 5px;
@@ -22,7 +23,7 @@ ui <- fluidPage(
                   }
                     "))
   ),
-  tags$head(
+  tags$head( # ITTO Planning section - banner
     tags$style(HTML("
                   #Plan {
                     background-color: #ffa500;
@@ -31,7 +32,7 @@ ui <- fluidPage(
                   }
                     "))
   ),
-  tags$head(
+  tags$head( # ITTO Planning section - buttons
     tags$style(HTML("
                     #Survey, #Quadrants, #Curricula, #Personas {
                       background-color: #fed8b1;
@@ -39,7 +40,7 @@ ui <- fluidPage(
                     }
                     "))
   ),
-  tags$head(
+  tags$head( # ITTO Launch section - banner
     tags$style(HTML("
                   #Launch {
                     background-color: #ffff00;
@@ -48,7 +49,7 @@ ui <- fluidPage(
                   }
                     "))
   ),
-  tags$head(
+  tags$head( # ITTO Launch section - buttons
     tags$style(HTML("
                     #Boilerplate, #Mentor, #Cohort {
                       background-color: #ffff99;
@@ -56,7 +57,7 @@ ui <- fluidPage(
                     }
                     "))
   ),
-  tags$head(
+  tags$head( # ITTO Execution section - banner
     tags$style(HTML("
                   #Execute {
                     background-color: #00ffff;
@@ -65,7 +66,7 @@ ui <- fluidPage(
                   }
                     "))
   ),
-  tags$head(
+  tags$head( # ITTO Execution section - buttons
     tags$style(HTML("
                     #Tracker, #Kanban, #CheckIn, #Certificate {
                       background-color: #e0ffff;
@@ -73,7 +74,7 @@ ui <- fluidPage(
                     }
                     "))
   ),
-  tags$head(
+  tags$head( # ITTO display cards - each card
     tags$style(HTML("
                     .Card {
                       width: 100%;                  /* Set width of cards */
@@ -86,7 +87,7 @@ ui <- fluidPage(
                     }
                     "))
   ),
-  tags$head(
+  tags$head( # ITTO display cards - header with title
     tags$style(HTML("
                     .Header {
                       color: #D32F2F;
@@ -99,7 +100,7 @@ ui <- fluidPage(
                     }
                     "))
   ),
-  tags$head(
+  tags$head( # ITTO display cards - icon and write-up box
     tags$style(HTML("
                     .Inform {
                       display: flex;              /* Children use Flexbox */
@@ -112,7 +113,7 @@ ui <- fluidPage(
                     }
                     "))
   ),
-  tags$head(
+  tags$head( # ITTO display cards - write-ups
     tags$style(HTML("
                     #LoremIpsum1, #LoremIpsum2, #LoremIpsum3 {
                       padding: 28px;
@@ -123,7 +124,7 @@ ui <- fluidPage(
                     }
                     "))
   ),
-  tags$head(
+  tags$head( # ITTI display cards - bulleted lists
     tags$style(HTML("
                     ol, ul {
                       list-style-position: outside;
@@ -131,9 +132,13 @@ ui <- fluidPage(
                     }
                  "))
   ),
+  
+  # The ITTO grid
   fluidRow(
     column(width=2),
-    column(width=9, h4("Hello!")),
+    column(width=9, 
+           h4("Grid"), 
+           h6("Select from Tools & Techniques to see the Inputs and Outputs")),
     column(width=1),
   ),
   fluidRow(
@@ -224,9 +229,11 @@ ui <- fluidPage(
     ),
     column(width=1),
   ),
+  
+  # The cards for ITTO (Inputs, Tools & Techniques, Output)
   fluidRow(
     column(width=1),
-    column(width=10, h4("Tools & Techniques")),
+    column(width=10, htmlOutput("ITTO")),
     column(width=1),
   ),
   fluidRow(
@@ -268,6 +275,9 @@ server <- function(input, output) {
     output$Execute <- renderText({
       "Execute"
     })
+    output$ITTO <- renderUI({
+      h4("Tools & Techniques: ")
+    })
     
     observeEvent(input$Survey, {
       print("Survey button pressed")
@@ -279,6 +289,9 @@ server <- function(input, output) {
       )
       output$LoremIpsum3 <- renderUI(
         survey_writeUp_out
+      )
+      output$ITTO <- renderUI(
+        h4("Tools & Techniques:", tags$b("Baseline Survey", style="color:darkorange"))
       )
     })
     
@@ -293,6 +306,9 @@ server <- function(input, output) {
       output$LoremIpsum3 <- renderUI(
         quadrants_writeUp_out
       )
+      output$ITTO <- renderUI(
+        h4("Tools & Techniques:", tags$b("4 Quadrants", style="color:darkorange"))
+      )
     })
     
     observeEvent(input$Curricula, {
@@ -306,6 +322,10 @@ server <- function(input, output) {
       output$LoremIpsum3 <- renderUI(
         curricula_writeUp_out
       )
+      output$ITTO <- renderUI(
+        h4("Tools & Techniques:", tags$b("Curricula", style="color:darkorange"))
+      )
+      
     })
     
     observeEvent(input$Personas, {
@@ -318,6 +338,124 @@ server <- function(input, output) {
       )
       output$LoremIpsum3 <- renderUI(
         personas_writeUp_out
+      )
+      output$ITTO <- renderUI(
+        h4("Tools & Techniques:", tags$b("Learner Personas", style="color:darkorange"))
+      )
+      
+    })
+    
+    observeEvent(input$Boilerplate, {
+      print("Boilerplate button pressed")
+      output$LoremIpsum1 <- renderUI(
+        boilerplate_writeUp_in
+      )
+      output$LoremIpsum2 <- renderUI(
+        boilerplate_writeUp_prc
+      )
+      output$LoremIpsum3 <- renderUI(
+        boilerplate_writeUp_out
+      )
+      output$ITTO <- renderUI(
+        h4("Tools & Techniques:", tags$b("Email Boilerplate", style="color:darkorange"))
+      )
+      
+    })
+    
+    observeEvent(input$Mentor, {
+      print("Mentor button pressed")
+      output$LoremIpsum1 <- renderUI(
+        mentor_writeUp_in
+      )
+      output$LoremIpsum2 <- renderUI(
+        mentor_writeUp_prc
+      )
+      output$LoremIpsum3 <- renderUI(
+        mentor_writeUp_out
+      )
+      output$ITTO <- renderUI(
+        h4("Tools & Techniques:", tags$b("Mentor", style="color:darkorange"))
+      )
+      
+    })
+    
+    observeEvent(input$Cohort, {
+      print("Cohort button pressed")
+      output$LoremIpsum1 <- renderUI(
+        cohort_writeUp_in
+      )
+      output$LoremIpsum2 <- renderUI(
+        cohort_writeUp_prc
+      )
+      output$LoremIpsum3 <- renderUI(
+        cohort_writeUp_out
+      )
+      output$ITTO <- renderUI(
+        h4("Tools & Techniques:", tags$b("Cohort", style="color:darkorange"))
+      )
+    })
+    
+    observeEvent(input$Tracker, {
+      print("Tracker button pressed")
+      output$LoremIpsum1 <- renderUI(
+        tracker_writeUp_in
+      )
+      output$LoremIpsum2 <- renderUI(
+        tracker_writeUp_prc
+      )
+      output$LoremIpsum3 <- renderUI(
+        tracker_writeUp_out
+      )
+      output$ITTO <- renderUI(
+        h4("Tools & Techniques:", tags$b("Master Tracker", style="color:darkorange"))
+      )
+    })
+
+    observeEvent(input$Kanban, {
+      print("Kanban button pressed")
+      output$LoremIpsum1 <- renderUI(
+        kanban_writeUp_in
+      )
+      output$LoremIpsum2 <- renderUI(
+        kanban_writeUp_prc
+      )
+      output$LoremIpsum3 <- renderUI(
+        kanban_writeUp_out
+      )
+      output$ITTO <- renderUI(
+        h4("Tools & Techniques:", tags$b("Kanban Board", style="color:darkorange"))
+      )
+    })
+
+    observeEvent(input$CheckIn, {
+      print("Check-in button pressed")
+      output$LoremIpsum1 <- renderUI(
+        checkIn_writeUp_in
+      )
+      output$LoremIpsum2 <- renderUI(
+        checkIn_writeUp_prc
+      )
+      output$LoremIpsum3 <- renderUI(
+        checkIn_writeUp_out
+      )
+      output$ITTO <- renderUI(
+        h4("Tools & Techniques:", tags$b("Check-In", style="color:darkorange"))
+      )
+    })
+
+    observeEvent(input$Certificate, {
+      print("Certificate button pressed")
+      output$LoremIpsum1 <- renderUI(
+        certificate_writeUp_in
+      )
+      output$LoremIpsum2 <- renderUI(
+        certificate_writeUp_prc
+      )
+      output$LoremIpsum3 <- renderUI(
+        certificate_writeUp_out
+      )
+      output$ITTO <- renderUI(
+        h4("Tools & Techniques:", tags$b("Certificate", style="color:darkorange"))
       )
     })
     
