@@ -23,6 +23,20 @@ ui <- fluidPage(
                   }
                     "))
   ),
+  tags$head( # Button hover and focus
+    tags$style(HTML("
+                    .btn:hover {
+                      background-color: green;
+                      color: darkorange;
+                      font-weight: bold;
+                    }
+                    .btn:focus {
+                      background-color: darkorange;
+                      color: darkorange;
+                      font-weight: bold;
+                    }
+                    "))
+  ),
   tags$head( # ITTO Planning section - banner
     tags$style(HTML("
                   #Plan {
@@ -258,26 +272,44 @@ ui <- fluidPage(
     ),
     column(width=1)
   ),
-  fluidRow(
-    HTML('<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vRNa6niWGtwfRo2WBg_uVO0Atp0xzpWSAcTOZV0zBek4QBEYlKhSwTmlb4X0b0leEpuWeHUzV_jc9jx/embed?start=true&loop=true&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>')    
-  ),
+  absolutePanel(right=20, bottom=0, height=360, width=270, 
+                draggable=TRUE, fixed=TRUE, style="opacity:0.72",
+    wellPanel(
+      h4("Multimedia Sample"),
+      h6("View in new window here"),
+      htmlOutput("frame"),
+    )),
 )
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
 
+    # Fixed banners    
     output$Plan <- renderText({
-      "Plan"
+      "I. Plan"
     })
     output$Launch <- renderText({
-      "Launch"
+      "II. Launch"
     })
     output$Execute <- renderText({
-      "Execute"
+      "III. Execute"
     })
+    
+    # The section header is initialized here and reactively changed.
     output$ITTO <- renderUI({
       h4("Tools & Techniques: ")
     })
+    
+    # The embedded content (google doc) is initialized here and reactively changed.
+    output$frame <- renderUI(
+      tags$iframe(
+        src="https://docs.google.com/presentation/d/e/2PACX-1vQNjeNAH-YuNzJLBSRpuhMcv21fbwATK1dJvGgCb_-tr7YOq6IPTw7yR_84iapMAyW536oLfjs5Ef8F/embed?start=false&loop=false&delayms=3000",  
+        width="100%",
+        height="100%",
+        frameborder=1,
+        #<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQNjeNAH-YuNzJLBSRpuhMcv21fbwATK1dJvGgCb_-tr7YOq6IPTw7yR_84iapMAyW536oLfjs5Ef8F/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+      )  
+    )
     
     observeEvent(input$Survey, {
       print("Survey button pressed")
